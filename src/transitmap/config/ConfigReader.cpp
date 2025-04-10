@@ -188,7 +188,7 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
         cfg->fromDot = true;
         break;
       case 'z':
-        cfg->mvtZooms = atof(optarg)
+        cfg->mvtZooms = atof(optarg);
         // zoom = optarg;
         break;
       case ':':
