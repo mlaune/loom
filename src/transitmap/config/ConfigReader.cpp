@@ -61,7 +61,7 @@ void ConfigReader::help(const char* bin) const {
             << std::setw(37) << "  --no-deg2-labels"
             << "no labels for deg-2 stations\n"
 #ifdef PROTOBUF_FOUND
-            << std::setw(37) << "  -z [ --zoom ] arg (=12)"
+            << std::setw(37) << "  -z [ --zoom ] (=12)"
             << "zoom level to write for MVT tiles, comma separated or range\n"
             << std::setw(37) << "  --mvt-path (=.)"
             << "path for MVT tiles\n\n"
