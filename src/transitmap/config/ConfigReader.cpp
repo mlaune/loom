@@ -61,7 +61,7 @@ void ConfigReader::help(const char* bin) const {
             << std::setw(37) << "  --no-deg2-labels"
             << "no labels for deg-2 stations\n"
 #ifdef PROTOBUF_FOUND
-            << std::setw(37) << "  -z [ --zoom ] arg (=14)"
+            << std::setw(37) << "  --zoom arg (=14)"
             << "zoom level to write for MVT tiles, comma separated or range\n"
             << std::setw(37) << "  --mvt-path (=.)"
             << "path for MVT tiles\n\n"
@@ -188,7 +188,8 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
         cfg->fromDot = true;
         break;
       case 'z':
-        zoom = optarg;
+        cfg->mvtZooms = atof(optarg)
+        // zoom = optarg;
         break;
       case ':':
         std::cerr << argv[optind - 1];
@@ -218,33 +219,33 @@ void ConfigReader::read(Config* cfg, int argc, char** argv) const {
     exit(1);
   }
 
-  for (auto range : util::split(zoom, ',')) {
-    util::replaceAll(range, " ", "");
-    util::replaceAll(range, "=", "");
-    auto parts = util::split(range, '-');
-    if (parts.size() > 2) {
-      std::cerr << "Error while parsing zoom range" << zoom << std::endl;
-      exit(1);
-    }
+  // for (auto range : util::split(zoom, ',')) {
+  //   util::replaceAll(range, " ", "");
+  //   util::replaceAll(range, "=", "");
+  //   auto parts = util::split(range, '-');
+  //   if (parts.size() > 2) {
+  //     std::cerr << "Error while parsing zoom range" << zoom << std::endl;
+  //     exit(1);
+  //   }
 
-    int from = atoi(parts.front().c_str());
-    int to = atoi(parts.back().c_str());
+  //   int from = atoi(parts.front().c_str());
+  //   int to = atoi(parts.back().c_str());
 
-    if (from > to) {
-      int a = from;
-      from = to;
-      to = a;
-    }
+  //   if (from > to) {
+  //     int a = from;
+  //     from = to;
+  //     to = a;
+  //   }
 
-    if (from < 0 || from > 25 || to < 0 || to > 25) {
-      std::cerr << "Error while parsing zoom range" << zoom << std::endl;
-      exit(1);
-    }
+  //   if (from < 0 || from > 25 || to < 0 || to > 25) {
+  //     std::cerr << "Error while parsing zoom range" << zoom << std::endl;
+  //     exit(1);
+  //   }
 
-    for (int z = from; z <= to; z++) {
-      cfg->mvtZooms.push_back(z);
-    }
-  }
+  //   for (int z = from; z <= to; z++) {
+  //     cfg->mvtZooms.push_back(z);
+  //   }
+  // }
 
   if (cfg->mvtZooms.size() == 0) cfg->mvtZooms.push_back(12);
 
